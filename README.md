@@ -9,7 +9,7 @@ Systém bol vyvinutý v jazyku PHP `7.4.33` a využíva moduly implementované v
 Projekt vznikol v rámci predmetu Tvorba informačných systémov na FMFI UK BA v akademickom roku 2017/2018.
 
 ### Inštalácia a konfigurácia
-Pre inštaláciu z tohto systému postupujte, prosím, podľa nasledujúcich inštrukcií.
+Pre inštaláciu z [repozitáru systému](https://github.com/TIS2017/PritomnostNaPracovisku) postupujte, prosím, podľa nasledujúcich inštrukcií.
 Aplikácia na správne fungovanie vyžaduje externú pythonovú knižnicu `openpyxl`, ktorú možno nainštalovať príkazom:
 ```zsh
 python3 -m pip install openpyxl
@@ -138,14 +138,14 @@ php -S localhost:8000
 
 ## Pracovné cesty
 
-Systém Pracovné Cesty slúži na evidenciu pracovných ciest pre Katedru aplikovanej informatiky FMFI UK BA.
+Systém Pracovné cesty slúži na evidenciu pracovných ciest pre Katedru aplikovanej informatiky FMFI UK BA.
 Systém bol vyvinutý v jazyku PHP `8.2.27` vo frameworku Laravel `10.44.0`
 Detaily k aplikácii je možné nájsť v `docs/`.
 
 Projekt vznikol v rámci predmetu Tvorba informačných systémov na FMFI UK BA v akademickom roku 2023/2024.
 
 ### Inštalácia a konfigurácia
-Pre inštaláciu z tohto systému postupujte, prosím, podľa nasledujúcich inštrukcií.
+Pre inštaláciu z [repozitáru systému](https://github.com/TIS2023-FMFI/pracovne-cesty) postupujte, prosím, podľa nasledujúcich inštrukcií.
 Aplikácia pre správne fungovanie vyžaduje balík `texlive`, ideálne `texlive-full` 
 ([web](https://www.tug.org/texlive/)).
 
