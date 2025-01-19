@@ -5,7 +5,7 @@ Tento repozitár obsahuje informácie k údržbe systémov [PrítomnosťNaPracov
 ## Prítomnosť na Pracovisku
 
 Systém Prítomnosť na Pracovisku slúži na evidenciu dochádzky zamestnancov Katedry aplikovanej informatiky.
-Systém bol vyvinutý v jazyku PHP `7.4.33` a využíva moduly naprogramované v jazyku Python `3.9.2`.
+Systém bol vyvinutý v jazyku PHP `7.4.33` a využíva moduly implementované v jazyku Python `3.9.2`.
 Projekt vznikol v rámci predmetu Tvorba informačných systémov na FMFI UK BA v akademickom roku 2017/2018.
 
 ### Inštalácia a konfigurácia
