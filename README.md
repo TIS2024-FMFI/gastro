@@ -148,7 +148,7 @@ Pre inštaláciu z [repozitáru systému](https://github.com/TIS2023-FMFI/pracov
 Aplikácia pre správne fungovanie vyžaduje balík `texlive`, ideálne `texlive-full` 
 ([web](https://www.tug.org/texlive/)).
 
-Tento balík možno nainštalovať na linuxe napríklad pomocou package managera `apt` nasledovne:
+Tento balík možno v Linuxe nainštalovať napríklad pomocou package managera `apt` nasledovne:
 ```sh
 apt-get install texlive-full
 ```
@@ -197,7 +197,7 @@ MAIL_FROM_ADDRESS=
 MAIL_FROM_NAME=
 ```
 
-Taktiež pre správne fungovanie integrácie aplikácií je potrebné nastaviť parameter `PID` v `src/app/Models/PritomnostUser.php`:
+Pre správne fungovanie integrácie aplikácií je potrebné nastaviť parameter `PID` v `src/app/Models/PritomnostUser.php` na rovnakú hodnotu ako v systéme Prítomnosť na Pracovisku.
 
 ```php
 private const REQUEST_VALIDATOR_ID = PID;
