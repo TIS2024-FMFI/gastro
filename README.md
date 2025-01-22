@@ -71,7 +71,7 @@ CREATE TABLE `absence` (
   UNIQUE KEY `user_id_2` (`user_id`,`date_time`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `absence_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15892 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_slovak_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16052 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_slovak_ci;
 
 DROP TABLE IF EXISTS `deadlines`;
 CREATE TABLE `deadlines` (
@@ -148,6 +148,11 @@ Pre inštaláciu z [repozitáru systému](https://github.com/TIS2023-FMFI/pracov
 Aplikácia pre správne fungovanie vyžaduje balík `texlive`, ideálne `texlive-full` 
 ([web](https://www.tug.org/texlive/)).
 
+Tento balík možno nainštalovať na linuxe napríklad pomocou package managera `apt` nasledovne:
+```sh
+apt-get install texlive-full
+```
+
 V rámci inštalácie je potrebné stiahnuť si najnovšiu verziu projektu:
 ```sh
 git pull origin main
@@ -190,6 +195,12 @@ MAIL_PASSWORD=
 MAIL_ENCRYPTION=
 MAIL_FROM_ADDRESS=
 MAIL_FROM_NAME=
+```
+
+Taktiež pre správne fungovanie integrácie aplikácií je potrebné nastaviť parameter `PID` v `src/app/Models/PritomnostUser.php`:
+
+```php
+private const REQUEST_VALIDATOR_ID = PID;
 ```
 
 Ďalej je potrebné nainštalovať závislosti:
