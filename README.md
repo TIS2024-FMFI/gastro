@@ -203,6 +203,11 @@ Pre správne fungovanie integrácie aplikácií je potrebné nastaviť parameter
 private const REQUEST_VALIDATOR_ID = PID;
 ```
 
+Kvôli generovaniu PDF dokumentov je potrebné vytvoriť v adresári `src/storage/app/` adresár `pdf_exports`:
+```sh
+mkdir src/storage/app/pdf_exports
+```
+
 Ďalej je potrebné nainštalovať závislosti:
 ```sh
 composer install --optimize-autoloader --no-dev
