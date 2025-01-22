@@ -197,7 +197,7 @@ MAIL_FROM_ADDRESS=
 MAIL_FROM_NAME=
 ```
 
-Pre správne fungovanie integrácie aplikácií je potrebné nastaviť parameter `PID` v `src/app/Models/PritomnostUser.php` na rovnakú hodnotu ako v systéme Prítomnosť na Pracovisku.
+Pre správne fungovanie integrácie aplikácií je potrebné nastaviť atribút `REQUEST_VALIDATOR_ID` v súbore `src/app/Models/PritomnostUser.php` na rovnakú hodnotu, aká je nastavená v premennej `$request_validators` v súbore `Aplikácia/include/config.php` v systéme Prítomnosť na pracovisku.
 
 ```php
 private const REQUEST_VALIDATOR_ID = PID;
