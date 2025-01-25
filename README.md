@@ -42,7 +42,13 @@ $department_id = 'ID katedry';
 $personal_id_prefix = 'PID prefix';
 ```
 
-Pokiaľ databáza ešte nebola vytvorená, je potrebné spustiť skript na vytvorenie databázy:
+Ak existuje databáza podľa projektu z rokov 2017/2018, stačí spustiť:
+```sql
+ALTER TABLE dochadzka.absence
+    ADD COLUMN `cesty_id` bigint unsigned NULL DEFAULT NULL AFTER `confirmation`;
+```
+
+Ak databáza ešte nebola vytvorená, je potrebné spustiť skript na jej vytvorenie:
 ```sql
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -152,6 +158,10 @@ Tento balík možno v Linuxe nainštalovať napríklad pomocou package managera 
 ```sh
 apt-get install texlive-full
 ```
+V závislosti od platformy môže byť potrebné nainštalovať balík `php-bcmath`([web](https://www.php.net/manual/en/book.bc.php)):
+```sh
+apt-get install php-bcmath
+```
 
 V rámci inštalácie je potrebné stiahnuť si najnovšiu verziu projektu:
 ```sh
@@ -213,10 +223,73 @@ mkdir src/storage/app/pdf_exports
 composer install --optimize-autoloader --no-dev
 ```
 
-Pokiaľ databáza ešte nebola naplnená, je potrebné spustiť databázové migrácie:
+Pri problémoch s generovaním PDF dokumentov, aj keď by sa mal balík nainštalovať v predošlom kroku, môže pomôcť explicitná inštalácia príkazom:
+```sh
+composer require ismaelw/laratex
+```
+
+Ak existuje databáza podľa projektu z rokov 2023/2024, stačí spustiť:
+```sql
+ALTER TABLE cesty.countries
+    ADD COLUMN `trips_count` bigint unsigned NOT NULL DEFAULT '0' AFTER `name`;
+
+ALTER TABLE cesty.spp_symbols
+    ADD COLUMN `agency` VARCHAR(100) AFTER `status`,
+    ADD COLUMN `acronym` VARCHAR(10) AFTER `agency`,
+    DROP COLUMN `fund`;
+
+UPDATE cesty.business_trips
+    SET `state` = `state` - 1
+    WHERE `state` >= 2;
+
+ALTER TABLE cesty.business_trips
+    ADD COLUMN spp_symbol_id_2 BIGINT UNSIGNED NULL AFTER reimbursement_id,
+    ADD COLUMN spp_symbol_id_3 BIGINT UNSIGNED NULL AFTER spp_symbol_id_2,
+    ADD COLUMN amount_eur SMALLINT NULL AFTER spp_symbol_id_3,
+    ADD COLUMN amount_eur_2 SMALLINT NULL AFTER amount_eur,
+    ADD COLUMN amount_eur_3 SMALLINT NULL AFTER amount_eur_2,
+    ADD COLUMN is_template BOOLEAN NOT NULL DEFAULT FALSE AFTER conclusion,
+    ADD CONSTRAINT business_trips_spp_symbol_id_2_foreign 
+        FOREIGN KEY (spp_symbol_id_2) REFERENCES spp_symbols(id),
+    ADD CONSTRAINT business_trips_spp_symbol_id_3_foreign 
+        FOREIGN KEY (spp_symbol_id_3) REFERENCES spp_symbols(id);
+
+ALTER TABLE cesty.users
+    ADD COLUMN iban VARCHAR(34) NULL AFTER remember_token,
+    ADD COLUMN spp_user_type SMALLINT UNSIGNED NULL AFTER iban;
+
+ALTER TABLE cesty.users
+    ADD COLUMN personal_id_dochadzka int NULL AFTER updated_at;
+
+ALTER TABLE cesty.business_trips
+    # advance => participation (vlozne)
+    RENAME COLUMN advance_expense_id TO participation_expense_id,
+    # allowance => advance (zaloha)
+    RENAME COLUMN allowance_expense_id TO advance_expense_id;
+ALTER TABLE cesty.business_trips
+    # allowance (vreckove)
+    ADD COLUMN allowance_expense_id BIGINT UNSIGNED UNIQUE NULL AFTER advance_expense_id;
+ALTER TABLE cesty.business_trips
+    # insurance (poistenie)
+    ADD COLUMN insurance_expense_id BIGINT UNSIGNED UNIQUE NULL AFTER participation_expense_id;
+```
+
+Ak databáza ešte nebola vytvorená, je potrebné spustiť databázové migrácie:
 ```sh
 php artisan migrate
 php artisan db:seed
+```
+
+Po rozsiahlej aktualizácii systému je vhodné vyčistiť všetky vyrovnávacie pamäte príkazmi:
+```sh
+php artisan cache:clear
+php artisan route:clear
+php artisan view:clear
+php artisan config:clear
+```
+prípadne príkazom:
+```sh
+php artisan optimize:clear
 ```
 
 Na spustenie plánovaných úloh, ako je napríklad posielanie varovných emailov, je potrebné spustiť scheduler:
