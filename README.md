@@ -274,6 +274,15 @@ ALTER TABLE cesty.business_trips
     ADD COLUMN insurance_expense_id BIGINT UNSIGNED UNIQUE NULL AFTER participation_expense_id;
 ```
 
+Treba ručne prepísať grantee na idčka z users tabulky a potom spustiť.
+```sql
+ALTER TABLE cesty.spp_symbols
+    MODIFY COLUMN grantee BIGINT UNSIGNED NOT NULL,
+    ADD CONSTRAINT fk_spp_symbols_grantee
+    FOREIGN KEY (grantee) REFERENCES users(id)
+    ON DELETE CASCADE ON UPDATE CASCADE;
+```
+
 Ak databáza ešte nebola vytvorená, je potrebné spustiť databázové migrácie:
 ```sh
 php artisan migrate
